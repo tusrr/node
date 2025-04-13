@@ -79,4 +79,4 @@ catch(ex){
 }
 });
 
-module.exports= router
+module.exports = {router,Movie}
