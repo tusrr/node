@@ -1,3 +1,4 @@
+const bcrypt=require('bcrypt')
 const _ = require('lodash') //by convention , we can also call it lodash
 const mongoose=require('mongoose')
 const Joi = require('joi');
@@ -69,7 +70,10 @@ router.post('/', async (req, res) => {
 // rewriting it with lodash
    user = new User(_.pick(req.body,['name','email','password']))
    
-  await user.save()
+    const salt=await bcrypt.genSalt(10)
+    user.password = await bcrypt.hash(user.password,salt)
+
+    await user.save()
 //   res.send(user);
   // when registered, we shouldn't send their password to the client
 //conventional method
