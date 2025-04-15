@@ -1,3 +1,5 @@
+const config = require('config')
+const jwt=require('jsonwebtoken')
 const bcrypt=require('bcrypt')
 const _ = require('lodash') //by convention , we can also call it lodash
 const mongoose=require('mongoose')
@@ -82,8 +84,9 @@ router.post('/', async (req, res) => {
     //     email:user.email
     //   })
 
-
-    res.send(_.pick(user,['_id','name','email']))
+  const token=jwt.sign({_id:user._id},config.get('jwtPrivateKey'))
+  res.header('x-auth-token',token).send(_.pick(user,['_id','name','email']))
+    // res.send(_.pick(user,['_id','name','email']))
 }
 catch(ex){
     res.send(ex.message)
