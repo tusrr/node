@@ -1,6 +1,5 @@
 //can also be called logins.js
-const config = require('config')
-const jwt=require('jsonwebtoken')
+
 const { User } = require("./register");
 const bcrypt = require("bcrypt");
 const _ = require("lodash");
@@ -25,7 +24,7 @@ router.post("/", async (req, res) => {
     if (!validPassword)
       return res.status(400).send("Invalid Email or Password");
 
-    const token=jwt.sign({_id:user._id},config.get('jwtPrivateKey'))
+    const token= user.generateAuthToken(); 
     res.send(token)
 
     // res.send(true);
@@ -44,3 +43,9 @@ function validate(req) {
 }
 
 module.exports = router;
+
+
+// To set jwt private key in environment var
+//in powershell : $env:vidly_jwtPrivateKey = "newSecureKey123" <last for passworddd>
+//in powershell : $env:vidly_jwtPrivateKey = "mySecureKey"
+// can be verified --  use whatever security key to use on the jwt.io along with the generated token

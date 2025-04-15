@@ -33,7 +33,20 @@ const userSchema = new mongoose.Schema({
   }
 })
 
+// for encapsulating logic jwt generation, adding a method to model
+
+userSchema.methods.generateAuthToken = function(){
+  const token=jwt.sign({_id:this._id},config.get('jwtPrivateKey'))
+  return token;
+
+}
+
+
+
+
 const User = mongoose.model('User',userSchema)
+
+
 
 
 function validateUser(user) {
@@ -78,13 +91,16 @@ router.post('/', async (req, res) => {
     await user.save()
 //   res.send(user);
   // when registered, we shouldn't send their password to the client
-//conventional method
+
+//conventional method -- multiple lines ,baar baar user.property) what if ,50 prop,so with lodash one line
   //   res.send({
     //     name:user.name,
     //     email:user.email
     //   })
 
-  const token=jwt.sign({_id:user._id},config.get('jwtPrivateKey'))
+
+    // Information expert principle
+  const token= user.generateAuthToken();
   res.header('x-auth-token',token).send(_.pick(user,['_id','name','email']))
     // res.send(_.pick(user,['_id','name','email']))
 }
