@@ -1,4 +1,4 @@
-const asyncMiddlewares = require('../middleware/async')
+// const asyncMiddlewares = require('../middleware/async')
 const auth = require('../middleware/auth') //here auth for authorisation
 const admin = require('../middleware/admin')
 const express=require('express')
@@ -28,7 +28,7 @@ const Genre = mongoose.model('Genre',genreSchema)
 // ];
 
 
-router.get('/',asyncMiddlewares(async(req,res,next) => {
+router.get('/',async(req,res,next) => {
   try{
   const genres = await Genre.find().sort('name');
   res.send(genres)
@@ -36,7 +36,7 @@ router.get('/',asyncMiddlewares(async(req,res,next) => {
     next(ex);
    
   }
-}));
+});
 
 router.post('/', auth,async (req, res) => {
   const { error } = validateGenre(req.body); 
