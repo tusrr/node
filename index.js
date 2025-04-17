@@ -1,3 +1,4 @@
+const error = require('./middleware/error')
 const config = require('config')
 const Joi = require('joi');
 Joi.objectId = require('joi-objectid')(Joi)
@@ -10,6 +11,7 @@ const rentals = require('./routes/rentals')
 const register = require('./routes/register')
 const auth = require('./routes/auth')
 const express = require('express');
+const func = require('joi/lib/types/func');
 const app = express();
 
 
@@ -32,6 +34,7 @@ app.use('/api/movies', movies.router  );
 app.use('/api/rentals', rentals);
 app.use('/api/users', register.router);
 app.use('/api/auth', auth);
+app.use(error)
 
 const port = process.env.PORT || 3000;
 app.listen(port, () => console.log(`Listening on port ${port}...`));
