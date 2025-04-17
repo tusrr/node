@@ -46,6 +46,11 @@ module.exports = router;
 
 
 // To set jwt private key in environment var
-//in powershell : $env:vidly_jwtPrivateKey = "newSecureKey123" <last for passworddd>
+//in powershell : $env:vidly_jwtPrivateKey = "newSecureKey123" <last for passworddd> auth token  
+// eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2N2ZlNzk1MjFlNDAyZmEyMjAxMDI1YjkiLCJpc0FkbWluIjp0cnVlLCJpYXQiOjE3NDQ3NTE3ODF9.QS_xGRfsL2h8qNH174NFGP3zKw-Cz9yPSvc_FK8tZ1k 
 //in powershell : $env:vidly_jwtPrivateKey = "mySecureKey"
 // can be verified --  use whatever security key to use on the jwt.io along with the generated token
+
+
+
+// eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2N2ZlYWY0NDQ4ZGRkZDU1NTc0MDgwOGMiLCJpYXQiOjE3NDQ3NDQyNjB9.LWdUA-Q7haL8jFbUktti40rh8gVGkPUZD-OA5Dh-Mwc

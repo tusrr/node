@@ -1,3 +1,5 @@
+const auth = require('../middleware/auth')
+const admin= require('../middleware/admin')
 const config = require('config')
 const jwt=require('jsonwebtoken')
 const bcrypt=require('bcrypt')
@@ -30,13 +32,18 @@ const userSchema = new mongoose.Schema({
     required:true,
     minlength:5,
     maxlength:1024, //higher since we'll hash it   
-  }
+  },
+  isAdmin:Boolean
 })
+
+
+
+
 
 // for encapsulating logic jwt generation, adding a method to model
 
 userSchema.methods.generateAuthToken = function(){
-  const token=jwt.sign({_id:this._id},config.get('jwtPrivateKey'))
+  const token=jwt.sign({_id:this._id, isAdmin:this.isAdmin},config.get('jwtPrivateKey'))
   return token;
 
 }
@@ -58,6 +65,17 @@ function validateUser(user) {
 
   return Joi.validate(user, schema);
 }
+
+
+router.get('/me',auth,async(req,res)=>{
+
+  const user = await User.findById(req.user._id).select('-password')
+  res.send(user)
+
+})
+
+
+
 
 
 router.get('/', async (req,res) => {
